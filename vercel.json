@@ -6,10 +6,10 @@
             "use": "@vercel/node"
         }
     ],
-    "rewrites": [
+    "routes": [
         {
-            "source": "/bfhl",
-            "destination": "/api/bfhl"
+            "src": "/bfhl",
+            "dest": "api/bfhl.js"
         }
     ]
 }
