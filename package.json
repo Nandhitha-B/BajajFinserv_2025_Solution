@@ -1,17 +1,10 @@
 {
   "name": "bajajfinserv_2025_solution",
   "version": "1.0.0",
-  "description": "",
-  "main": "api/bfhl.js",
-  "scripts": {
-    "start": "node api/bfhl.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "serverless-http": "^3.0.0"
   }
 }
