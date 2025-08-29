@@ -1,0 +1,64 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+function alternatingCapsReverse(str) {
+    let reversed = str.split("").reverse().join("");
+    let result = "";
+    for (let i = 0; i < reversed.length; i++) {
+        if (i % 2 === 0) {
+            result += reversed[i].toUpperCase();
+        } else {
+            result += reversed[i].toLowerCase();
+        }
+    }
+    return result;
+}
+
+app.post('/bfhl', (req, res) => {
+    console.log("Incoming body:", req.body);
+
+    const { data } = req.body;
+
+    if (!Array.isArray(data)) {
+        return res.status(400).json({ status: false, message: 'Invalid data format' });
+    }
+
+    const n = data.filter(item => !isNaN(item));
+    const alpha = data.filter(item => /^[a-zA-Z]$/.test(item));
+    const specials = data.filter(item => !/^[a-zA-Z0-9]$/.test(item));
+    const even_numbers = n.filter(num => parseInt(num) % 2 === 0);
+    const odd_numbers = n.filter(num => parseInt(num) % 2 !== 0);
+    const upper_case_alphabets = alpha.map(a => a.toUpperCase());
+    const sum = n.reduce((acc, val) => acc + parseInt(val), 0);
+    const alt_caps = alternatingCapsReverse(alpha.join(""));
+
+    const response = {
+        status: true,
+        user_id: process.env.USER_ID,
+        email: process.env.EMAIL_ID,
+        roll_number: process.env.REG_NUMBER,
+        even_numbers,
+        odd_numbers,
+        upper_case_alphabets,
+        special_characters: specials,
+        sum_of_numbers: sum,
+        concatenated_alphabets: alt_caps
+    };
+
+    res.json(response);
+});
+
+app.get('/bfhl', (req, res) => {
+    res.status(200).json({ operation_code: 1 });
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
