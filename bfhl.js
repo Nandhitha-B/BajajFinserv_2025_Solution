@@ -1,11 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const serverless = require("serverless-http");
 
 const app = express();
-const port = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(express.json());
 
@@ -22,13 +19,11 @@ function alternatingCapsReverse(str) {
     return result;
 }
 
-app.post('/', (req, res) => {
-    console.log("Incoming body:", req.body);
-
+function handlePost(req, res) {
     const { data } = req.body;
 
     if (!Array.isArray(data)) {
-        return res.status(400).json({ status: false, message: 'Invalid data format' });
+        return res.status(400).json({ status: false, message: "Invalid data format" });
     }
 
     const n = data.filter(item => !isNaN(item));
@@ -43,7 +38,8 @@ app.post('/', (req, res) => {
     const fullName = process.env.USER_ID || "Nandhitha B";
     const dob = process.env.DOB || "06092004";
     const user = `${fullName.toLowerCase().replace(/\s+/g, "_")}_${dob}`;
-    const response = {
+
+    res.json({
         is_success: true,
         user_id: user,
         email: process.env.EMAIL_ID,
@@ -54,14 +50,19 @@ app.post('/', (req, res) => {
         special_characters: specials,
         sum: sum.toString(),
         concat_string: alt_caps
-    };
+    });
+}
 
-    res.json(response);
-});
-
-app.get('/', (req, res) => {
+function handleGet(req, res) {
     res.status(200).json({ operation_code: 1 });
-});
+}
 
-module.exports = require("serverless-http")(app);
-
+module.exports = (req, res) => {
+    if (req.method === "POST") {
+        handlePost(req, res);
+    } else if (req.method === "GET") {
+        handleGet(req, res);
+    } else {
+        res.status(405).json({ message: "Method not allowed" });
+    }
+};
