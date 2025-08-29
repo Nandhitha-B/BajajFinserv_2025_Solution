@@ -5,5 +5,11 @@
             "src": "api/bfhl.js",
             "use": "@vercel/node"
         }
+    ],
+    "rewrites": [
+        {
+            "source": "/bfhl",
+            "destination": "/api/bfhl"
+        }
     ]
 }
