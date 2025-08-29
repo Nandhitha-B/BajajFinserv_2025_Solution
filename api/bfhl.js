@@ -63,5 +63,4 @@ app.get('/', (req, res) => {
     res.status(200).json({ operation_code: 1 });
 });
 
-module.exports = app;
 module.exports.handler = serverless(app);
