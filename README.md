@@ -1,15 +1,23 @@
 BAJAJ FINSERV 2025 SOLUTION
+
 This project implements a serverless REST API hosted on Vercel, which processes an input array and returns various computed results.
 
 TECHNOLOGIES USED:
+
 -Node.js
+
 -Express.js
+
 -Vercel
+
 -CORS
+
 -serverless-HTTP
 
 API ENDPOINT
+
 POST  /bfhl
+
 Request Body example:
 
 Request
