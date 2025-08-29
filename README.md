@@ -37,6 +37,7 @@ This project implements a serverless REST API hosted on Vercel, which processes 
 
 
 FEATURES:
+
 Separates even/odd numbers from input
 
 Converts alphabets to uppercase
