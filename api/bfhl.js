@@ -22,7 +22,7 @@ function alternatingCapsReverse(str) {
     return result;
 }
 
-app.post('/bfhl', (req, res) => {
+app.post('/', (req, res) => {
     console.log("Incoming body:", req.body);
 
     const { data } = req.body;
@@ -59,7 +59,7 @@ app.post('/bfhl', (req, res) => {
     res.json(response);
 });
 
-app.get('/bfhl', (req, res) => {
+app.get('/', (req, res) => {
     res.status(200).json({ operation_code: 1 });
 });
 
