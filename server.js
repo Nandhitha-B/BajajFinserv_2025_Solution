@@ -35,21 +35,24 @@ app.post('/bfhl', (req, res) => {
     const specials = data.filter(item => !/^[a-zA-Z0-9]$/.test(item));
     const even_numbers = n.filter(num => parseInt(num) % 2 === 0);
     const odd_numbers = n.filter(num => parseInt(num) % 2 !== 0);
-    const upper_case_alphabets = alpha.map(a => a.toUpperCase());
+    const alphabets = alpha.map(a => a.toUpperCase());
     const sum = n.reduce((acc, val) => acc + parseInt(val), 0);
     const alt_caps = alternatingCapsReverse(alpha.join(""));
 
+    const fullName = process.env.USER_ID || "Nandhitha B";
+    const dob = process.env.DOB || "06092004";
+    const user = `${fullName.toLowerCase().replace(/\s+/g, "_")}_${dob}`;
     const response = {
-        status: true,
-        user_id: process.env.USER_ID,
+        is_success: true,
+        user_id: user,
         email: process.env.EMAIL_ID,
-        roll_number: process.env.REG_NUMBER,
-        even_numbers,
+        roll_number: process.env.REG_NO,
         odd_numbers,
-        upper_case_alphabets,
+        even_numbers,
+        alphabets,
         special_characters: specials,
-        sum_of_numbers: sum,
-        concatenated_alphabets: alt_caps
+        sum: sum.toString(),
+        concat_string: alt_caps
     };
 
     res.json(response);
@@ -59,6 +62,5 @@ app.get('/bfhl', (req, res) => {
     res.status(200).json({ operation_code: 1 });
 });
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+module.exports = app;
+
